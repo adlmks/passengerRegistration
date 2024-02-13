@@ -13,7 +13,7 @@ public class AirplaneRegistrationApp extends JFrame {
     private JComboBox<String> seatComboBox;
     private JButton registerButton;
 
-    // Connection string for SQLite database
+
     private static final String DB_URL = "jdbc:sqlite:passengers.db";
 
     public AirplaneRegistrationApp() {
@@ -62,12 +62,12 @@ public class AirplaneRegistrationApp extends JFrame {
                 registerPassenger();
             }
         });
-        panel.add(new JLabel()); // Empty label for spacing
+        panel.add(new JLabel());
         panel.add(registerButton);
 
         add(panel);
         pack();
-        setLocationRelativeTo(null); // Center the window on the screen
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
@@ -81,7 +81,7 @@ public class AirplaneRegistrationApp extends JFrame {
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement()) {
-            // Create table if not exists
+
             String createTableSQL = "CREATE TABLE IF NOT EXISTS passengers (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "full_name TEXT," +
@@ -92,7 +92,6 @@ public class AirplaneRegistrationApp extends JFrame {
                     "seat_preference TEXT)";
             stmt.execute(createTableSQL);
 
-            // Insert new passenger
             String insertSQL = "INSERT INTO passengers (full_name, flight_number, seat_number, age, gender, seat_preference) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(insertSQL);
@@ -112,7 +111,6 @@ public class AirplaneRegistrationApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Create database and launch the application
         createDatabase();
         SwingUtilities.invokeLater(() -> new AirplaneRegistrationApp());
     }
